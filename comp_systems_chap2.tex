@@ -1,6 +1,7 @@
 \documentclass[12pt]{article}
 \usepackage{amsmath}
 \usepackage{amsfonts}
+\usepackage{mathtools}
 
 \begin{document}
 \section{Conversion Functions}
@@ -27,7 +28,7 @@ $U2B_w=\text{Inverse of } B2U$. Takes in a positive integer and converts it to b
 $T2B_w=\text{Inverse of } B2T$. Takes in an integer and converts it to binary. Convert it to unsigned binary first, then take the two's complement.
 \newpage
 \section{Composite/Hard Conversion Functions}
-\subsection{$U2T_w(\vec{x})$: Integer (Unsigned) to Integer (Signed)}
+\subsection{$U2T_w(x)$: Integer (Unsigned) to Integer (Signed)}
 To do this conversion perform the following steps
 \begin{enumerate}
 	\item Convert the positive integer to binary
@@ -36,8 +37,32 @@ To do this conversion perform the following steps
 
 The formal equation is below
 \begin{equation}
-U2T_w(\vec{x})=B2T_w(U2B_x(\vec{x}))
+U2T_w(x)=B2T_w(U2B_x(x))
 \end{equation}
+
+\section{Truncating a binary number $k$ bits}
+Takes in ANY binary number and truncates it $k$ bits. To perform the conversion use these steps:
+\begin{enumerate}
+\item Convert the number from binary to an unsigned integer. 
+\item Letting that integer be $y$, perform $y \bmod 2^k$ to get another integer. If you want the unsigned form your done.
+\item Letting that integer be $n$, perform $U2T_w(n)$
+\end{enumerate}
+This is useful for figuring out the result of
+\begin{verse}
+int y = 255;
+char x = (char) y;
+\end{verse}
+
+\section{Binary Arithmetic From Integer Form}
+This section shows how figure out what the addition/subtraction of two binary numbers is. It assumes that the two binary numbers are first converted to either signed for unsigned integers $x$ and $y$.
+\subsection{Unsigned Arithmetic}
+\begin{equation}
+x+_w^u y = \begin{cases}
+x+y & \text{if } x + y < 2^w \\
+0 & \text{else }
+\end{cases}
+\end{equation}
+
 \[
  u(x) =
   \begin{cases}
