@@ -1,16 +1,48 @@
 \documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
 
 \begin{document}
-Converting a Binary Number into Unsigned Integer Form
-
+\section{Conversion Functions}
+\subsection{$B2U_w(\vec{x})$: Binary to Unsigned Integer}
 \begin{eqnarray*}
 B2U_w(\vec{x})&=&\displaystyle \sum \limits_{i=0}^{w-1} x_{i} 2^i\\
 \end{eqnarray*}
+Domain: Any binary number\\
+Range: $\mathbb{Z}, \quad 0\leq y \leq 2^w-1$
 
-
-Converting a Binary Number into Signed Integer Form
-
+\subsection{$B2T_w( \vec{x} )$: Binary to Signed}
 \begin{eqnarray*}
 B2T_w( \vec{x} ) = x_{w-1} ({-2}^{w-1}) + \displaystyle \sum \limits_{i=0}^{w-2} x_{i} 2^i
 \end{eqnarray*}
+Domain: Any binary number\\
+Range: $\mathbb{Z}, \quad -2^{w-1}\leq y \leq 2^{w-1}-1$
+
+\subsubsection{Binary conversion notes}
+Both the above formulas are one-to-one both ways, that is any binary number represents one and only one unsigned or signed integer.
+
+\subsection{Inverse Conversion Functions}
+$U2B_w=\text{Inverse of } B2U$. Takes in a positive integer and converts it to binary. Use the typical method of converting a number to binary. If the number is negative use the method below.
+
+$T2B_w=\text{Inverse of } B2T$. Takes in an integer and converts it to binary. Convert it to unsigned binary first, then take the two's complement.
+\newpage
+\section{Composite/Hard Conversion Functions}
+\subsection{$U2T_w(\vec{x})$: Integer (Unsigned) to Integer (Signed)}
+To do this conversion perform the following steps
+\begin{enumerate}
+	\item Convert the positive integer to binary
+	\item Use $B2T_w(\vec{x})$ (formula 1.2) to convert the binary number to a signed integer.
+\end{enumerate}
+
+The formal equation is below
+\begin{equation}
+U2T_w(\vec{x})=B2T_w(U2B_x(\vec{x}))
+\end{equation}
+\[
+ u(x) =
+  \begin{cases}
+   \exp{x} & \text{if } x \geq 0 \\
+   1       & \text{if } x < 0
+  \end{cases}
+\]
 \end{document}
