@@ -59,15 +59,33 @@ This section shows how figure out what the addition/subtraction of two binary nu
 \begin{equation}
 x+_w^u y = \begin{cases}
 x+y & \text{if } x + y < 2^w \\
-0 & \text{else }
+x+y-2^w & \text{if } 2^w \leq x+y < 2^{w+1}
+\end{cases}
+\end{equation}
+Let $s=x+_w^u y$. If $s<x$ or $s<y$ then overflow has occurred.
+
+\subsubsection{Additive Inverse}
+\begin{equation}
+-_w^u x = \begin{cases}
+x & \text{if } x=0\\
+2^w-x & \text{if } x>0
 \end{cases}
 \end{equation}
 
-\[
- u(x) =
-  \begin{cases}
-   \exp{x} & \text{if } x \geq 0 \\
-   1       & \text{if } x < 0
-  \end{cases}
-\]
+\subsection{Signed Arithmetic}
+Given $x$, $y$ s.t. $-2^{w-1} \leq x,y \leq 2^{w-1}-1$
+\begin{align}
+x+_w^t y&=U2T_w\left(T2U(x) +_w^u T2U_w(y)\right)\\
+&=U2T_w\left[(x+y) \bmod 2^w\right]
+\end{align}
+\subsubsection{Checking for Overflow}
+\begin{tabular}{|c|c|c|}
+\hline
+If & Then & Notes \\ \hline
+$2^{w-1} \leq x+y$ & $x+y-2^w$ & Positive Overflow\\
+$-2^{w-1} \leq x+y \leq 2^{w-1}-1$ & $x+y$ & Normal\\
+$x+y < -2^{w-1}$ & $x+y+2^w$ & Negative Overflow\\ \hline
+
+\end{tabular}
+
 \end{document}
